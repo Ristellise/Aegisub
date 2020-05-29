@@ -4,7 +4,18 @@
     <ProjectGuid>{BD00D65F-24DA-4784-8860-3B972EA125FC}</ProjectGuid>
     <RootNamespace>libresrc</RootNamespace>
   </PropertyGroup>
-
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <!-- Aegisub project configuration -->
   <PropertyGroup Label="AegisubConfiguration">
     <AegisubProjectType>lib</AegisubProjectType>
@@ -13,7 +24,6 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(MSBuildThisFileDirectory)..\aegisub.props" />
   </ImportGroup>
-
   <!-- Project specific configuration -->
   <ItemDefinitionGroup>
     <ClCompile>
@@ -23,15 +33,9 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(MSBuildThisFileDirectory)..\respack.targets" />
   </ImportGroup>
-
   <Target Name="DefaultConfig" BeforeTargets="ResPackGenerate">
-    <Copy
-      SourceFiles="$(SrcDir)default_config_win.json"
-      DestinationFiles="$(SrcDir)default_config_platform.json"
-      SkipUnchangedFiles="true"
-      />
+    <Copy SourceFiles="$(SrcDir)default_config_win.json" DestinationFiles="$(SrcDir)default_config_platform.json" SkipUnchangedFiles="true" />
   </Target>
-
   <!-- Project References -->
   <ItemGroup>
     <ProjectReference Include="..\wx\wxWidgets.vcxproj">
@@ -44,7 +48,6 @@
       <Project>{5cabcbef-e79a-4d27-94a5-cf4eaaf1dd96}</Project>
     </ProjectReference>
   </ItemGroup>
-
   <!-- Source files -->
   <ItemGroup>
     <ResPack Include="$(SrcDir)manifest.respack">
@@ -56,7 +59,6 @@
       <OutputDir>$(SrcDir)</OutputDir>
     </ResPack>
   </ItemGroup>
-
   <ItemGroup>
     <ClCompile Include="$(SrcDir)libresrc.cpp" />
     <ClCompile Include="$(SrcDir)bitmap.cpp" />

@@ -4,7 +4,18 @@
     <ProjectGuid>{5391A8B1-9C70-4DC4-92AD-D3E34C6B803F}</ProjectGuid>
     <RootNamespace>luajit</RootNamespace>
   </PropertyGroup>
-
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <!-- Aegisub project configuration -->
   <PropertyGroup Label="AegisubConfiguration">
     <AegisubProjectType>lib</AegisubProjectType>
@@ -13,7 +24,6 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(MSBuildThisFileDirectory)..\aegisub.props" />
   </ImportGroup>
-
   <!-- Project specific configuration -->
   <ItemDefinitionGroup>
     <ClCompile>
@@ -28,7 +38,6 @@
       <HeaderRoot>$(SrcDir)include</HeaderRoot>
     </InstallHeader>
   </ItemDefinitionGroup>
-
   <!-- BuildVM stuff -->
   <PropertyGroup>
     <BuildVMCommand>$(AegisubBinaryDir)luajit-buildvm$(AegisubPlatformSuffix)</BuildVMCommand>
@@ -39,11 +48,7 @@
       $(BuildCompileTargets)
     </BuildCompileTargets>
   </PropertyGroup>
-  <Target
-    Name="BuildVM"
-    Inputs="$(SrcDir)src\host\buildvm.c;$(SrcDir)src\lj_opt_fold.c"
-    Outputs="$(AegisubObjectDir)lj_vm.obj;$(AegisubObjectDir)lj_folddef.h"
-    >
+  <Target Name="BuildVM" Inputs="$(SrcDir)src\host\buildvm.c;$(SrcDir)src\lj_opt_fold.c" Outputs="$(AegisubObjectDir)lj_vm.obj;$(AegisubObjectDir)lj_folddef.h">
     <Message Text="luajit-buildvm peobj" Importance="High" />
     <Exec Command="$(BuildVMCommand) -m peobj -o lj_vm.obj" WorkingDirectory="$(AegisubObjectDir)" />
     <Message Text="luajit-buildvm folddef" Importance="High" />
@@ -58,19 +63,10 @@
       <LuajitLibDefname Include="bcdef;ffdef;libdef;recdef" />
     </ItemGroup>
   </Target>
-  <Target
-    Name="BuildLibDefs"
-    Inputs="@(LuajitLibSource)"
-    Outputs="@(LuajitLibDefname -> '$(AegisubObjectDir)lj_%(Identity).h')"
-    >
+  <Target Name="BuildLibDefs" Inputs="@(LuajitLibSource)" Outputs="@(LuajitLibDefname -> '$(AegisubObjectDir)lj_%(Identity).h')">
     <Message Text="luajit-buildvm %(LuajitLibDefname.Identity)" Importance="High" Condition="'%(LuajitLibDefname.Identity)' != ''" />
-    <Exec
-      Command="$(BuildVMCommand) -m %(LuajitLibDefname.Identity) -o $(AegisubObjectDir)lj_%(LuajitLibDefname.Identity).h @(LuajitLibSource->'%(filename)%(extension)',' ')"
-      WorkingDirectory="$(SrcDir)src\"
-      Condition="'%(LuajitLibDefname.Identity)' != ''"
-      />
+    <Exec Command="$(BuildVMCommand) -m %(LuajitLibDefname.Identity) -o $(AegisubObjectDir)lj_%(LuajitLibDefname.Identity).h @(LuajitLibSource->'%(filename)%(extension)',' ')" WorkingDirectory="$(SrcDir)src\" Condition="'%(LuajitLibDefname.Identity)' != ''" />
   </Target>
-
   <!-- Source files -->
   <ItemGroup>
     <LuajitLibSource Include="$(SrcDir)src\lib_base.c" />
@@ -85,11 +81,9 @@
     <LuajitLibSource Include="$(SrcDir)src\lib_jit.c" />
     <LuajitLibSource Include="$(SrcDir)src\lib_ffi.c" />
   </ItemGroup>
-
   <ItemGroup>
     <ClCompile Include="$(SrcDir)src\ljamalg.c" />
   </ItemGroup>
-  
   <ItemGroup>
     <LuajitVMSource Include="$(SrcDir)src\lj_alloc.c" />
     <LuajitVMSource Include="$(SrcDir)src\lj_api.c" />
@@ -140,7 +134,6 @@
     <LuajitVMSource Include="$(SrcDir)src\lj_vmevent.c" />
     <LuajitVMSource Include="$(SrcDir)src\lj_vmmath.c" />
   </ItemGroup>
-
   <ItemGroup>
     <InstallHeader Include="$(SrcDir)include\lauxlib.h" />
     <InstallHeader Include="$(SrcDir)include\lua.h" />
@@ -149,7 +142,6 @@
     <InstallHeader Include="$(SrcDir)include\luajit.h" />
     <InstallHeader Include="$(SrcDir)include\lualib.h" />
   </ItemGroup>
-
   <ItemGroup>
     <ClInclude Include="$(SrcDir)src\lj_alloc.h" />
     <ClInclude Include="$(SrcDir)src\lj_arch.h" />
@@ -212,7 +204,6 @@
     <ClInclude Include="$(SrcDir)src\lj_vm.h" />
     <ClInclude Include="$(SrcDir)src\lj_vmevent.h" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="$(SrcDir)src\jit\bc.lua" />
     <None Include="$(SrcDir)src\jit\bcsave.lua" />

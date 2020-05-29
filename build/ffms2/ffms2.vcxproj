@@ -4,16 +4,25 @@
     <ProjectGuid>{AA137613-96A1-4388-8905-71345B4F8F87}</ProjectGuid>
     <RootNamespace>ffms2</RootNamespace>
   </PropertyGroup>
-
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <!-- Aegisub project configuration -->
   <PropertyGroup Label="AegisubConfiguration">
     <AegisubProjectType>lib</AegisubProjectType>
   </PropertyGroup>
-
   <ImportGroup Label="PropertySheets">
     <Import Project="$(MSBuildThisFileDirectory)..\aegisub.props" />
   </ImportGroup>
-
   <!-- Project specific configuration -->
   <ItemDefinitionGroup>
     <ClCompile>
@@ -41,7 +50,6 @@
       <HeaderRoot>$(FfmsSrcDir)\include</HeaderRoot>
     </InstallHeader>
   </ItemDefinitionGroup>
-
   <!-- Source files -->
   <ItemGroup>
     <InstallHeader Include="$(FfmsSrcDir)\include\ffms.h" />
@@ -84,7 +92,6 @@
     <ClInclude Include="$(FfmsSrcDir)\src\vapoursynth\VapourSynth.h" />
     <ClInclude Include="$(FfmsSrcDir)\src\vapoursynth\vapoursource.h" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ffmpeg\ffmpeg.vcxproj">
       <Project>{f934ab7b-186b-4e96-b20c-a58c38c1b819}</Project>

@@ -5,12 +5,22 @@
     <RootNamespace>fribidi</RootNamespace>
     <AegisubProjectType>lib</AegisubProjectType>
   </PropertyGroup>
-
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <!-- Aegisub project configuration -->
   <ImportGroup Label="PropertySheets">
     <Import Project="$(MSBuildThisFileDirectory)..\aegisub.props" />
   </ImportGroup>
-
   <!-- Project specific configuration -->
   <ItemDefinitionGroup>
     <ClCompile>
@@ -25,22 +35,11 @@
       </PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
-
   <!-- Download fribidi -->
   <UsingTask TaskName="TarballProject" AssemblyFile="$(AegisubBinaryDir)BuildTasks.dll" />
-  <Target
-    Name="Download"
-    BeforeTargets="ClCompile"
-    Inputs="$(FribidiSrcDir)aegisub.hash"
-    Outputs="$(FribidiSrcDir)nonexistent-file"
-    >
-    <TarballProject
-      Url="https://github.com/fribidi/fribidi/releases/download/0.19.6/fribidi-0.19.6.tar.bz2"
-      Hash="cba8b7423c817e5adf50d28ec9079d14eafcec9127b9e8c8f1960c5ad585e17d"
-      Root="$(FribidiSrcDir)"
-      />
+  <Target Name="Download" BeforeTargets="ClCompile" Inputs="$(FribidiSrcDir)aegisub.hash" Outputs="$(FribidiSrcDir)nonexistent-file">
+    <TarballProject Url="https://github.com/fribidi/fribidi/releases/download/0.19.6/fribidi-0.19.6.tar.bz2" Hash="cba8b7423c817e5adf50d28ec9079d14eafcec9127b9e8c8f1960c5ad585e17d" Root="$(FribidiSrcDir)" />
   </Target>
-
   <!-- Source files -->
   <ItemGroup>
     <ClCompile Include="$(FribidiSrcDir)\lib\fribidi-arabic.c" />
